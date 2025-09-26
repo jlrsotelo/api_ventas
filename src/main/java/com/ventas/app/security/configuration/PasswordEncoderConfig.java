@@ -1,4 +1,4 @@
-package com.ventas.app.configuration;
+package com.ventas.app.security.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class PasswordEncoderConfig {
-	@Bean
+	private final Integer STRENGTH =10;
+	
+	/*@Bean
 	PasswordEncoder passwordEncoder() {
 		String id = "gtcrypt";
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
@@ -23,5 +25,10 @@ public class PasswordEncoderConfig {
 		encoders.put("argon2", new Argon2PasswordEncoder( 16,32,1,1 << 14,2));
 
 		return new DelegatingPasswordEncoder(id, encoders);
-	}
+	}*/
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(STRENGTH);
+	}	
 }

@@ -1,4 +1,4 @@
-package com.ventas.app.configuration;
+package com.ventas.app.security.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

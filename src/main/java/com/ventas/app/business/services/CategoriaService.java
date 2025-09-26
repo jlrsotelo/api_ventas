@@ -1,7 +1,8 @@
-package com.ventas.app.services;
+package com.ventas.app.business.services;
 
 import java.util.List;
-import com.ventas.app.entity.CategoriaEntity;
+
+import com.ventas.app.business.entity.CategoriaEntity;
 
 
 public interface CategoriaService {

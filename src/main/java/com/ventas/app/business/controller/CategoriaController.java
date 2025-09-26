@@ -1,4 +1,4 @@
-package com.ventas.app.controller;
+package com.ventas.app.business.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ventas.app.entity.CategoriaEntity;
-import com.ventas.app.services.CategoriaService;
-import com.ventas.app.services.ServiceException;
+import com.ventas.app.business.entity.CategoriaEntity;
+import com.ventas.app.business.services.CategoriaService;
+import com.ventas.app.business.services.ServiceException;
 
 @RestController
 @RequestMapping("/api/v1/categoria")

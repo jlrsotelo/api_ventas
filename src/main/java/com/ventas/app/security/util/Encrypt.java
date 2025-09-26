@@ -1,4 +1,4 @@
-package com.ventas.app.util;
+package com.ventas.app.security.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

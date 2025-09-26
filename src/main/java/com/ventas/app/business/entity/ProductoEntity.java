@@ -1,4 +1,4 @@
-package com.ventas.app.entity;
+package com.ventas.app.business.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

@@ -1,14 +1,14 @@
-package com.ventas.app.services.impl;
+package com.ventas.app.business.services.impl;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ventas.app.entity.CategoriaEntity;
-import com.ventas.app.repository.CategoriaRepository;
-import com.ventas.app.services.CategoriaService;
-import com.ventas.app.services.ServiceException;
+import com.ventas.app.business.entity.CategoriaEntity;
+import com.ventas.app.business.repository.CategoriaRepository;
+import com.ventas.app.business.services.CategoriaService;
+import com.ventas.app.business.services.ServiceException;
 
 import jakarta.transaction.Transactional;
 

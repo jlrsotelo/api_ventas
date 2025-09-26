@@ -1,7 +1,8 @@
-package com.ventas.app.services;
+package com.ventas.app.business.services;
 
 import java.util.List;
-import com.ventas.app.entity.ProductoEntity;
+
+import com.ventas.app.business.entity.ProductoEntity;
 
 
 public interface ProductoService {

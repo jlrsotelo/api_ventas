@@ -1,8 +1,8 @@
-package com.ventas.app.configuration;
+package com.ventas.app.security.configuration;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ventas.app.util.Encrypt;
+import com.ventas.app.security.util.Encrypt;
 
 public class GalaxyPasswordEncoder implements PasswordEncoder {
 	private static final PasswordEncoder INSTANCE = new GalaxyPasswordEncoder();

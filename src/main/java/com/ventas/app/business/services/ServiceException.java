@@ -1,4 +1,4 @@
-package com.ventas.app.services;
+package com.ventas.app.business.services;
 
 public class ServiceException extends Exception{
 	private static final long serialVersionUID = 1L;
