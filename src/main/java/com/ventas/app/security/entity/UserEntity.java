@@ -1,9 +1,19 @@
 package com.ventas.app.security.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.hibernate.annotations.SQLRestriction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +38,14 @@ public class UserEntity {
 
 	@Column(name = "STATE")
 	private String state;
+	
+	// Authorities
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "SEG_USER_AUTHORITY", 
+				joinColumns = { 
+				@JoinColumn(name = "USER_ID") }, 
+				inverseJoinColumns = {
+				@JoinColumn(name = "AUTHORITY_ID") })
+	@SQLRestriction("state='1'")
+	private Set<AuthorityEntity> authorities = new HashSet<>();	
 }

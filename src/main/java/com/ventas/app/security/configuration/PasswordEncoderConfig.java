@@ -15,20 +15,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class PasswordEncoderConfig {
 	private final Integer STRENGTH =10;
 	
-	/*@Bean
+	@Bean
 	PasswordEncoder passwordEncoder() {
 		String id = "gtcrypt";
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
 		encoders.put("gtcrypt", GalaxyPasswordEncoder.getInstance()); // Lagacy
 		encoders.put("noop", NoOpPasswordEncoder.getInstance());
-		encoders.put("bcrypt", new BCryptPasswordEncoder());
-		encoders.put("argon2", new Argon2PasswordEncoder( 16,32,1,1 << 14,2));
+		encoders.put("bcrypt", new BCryptPasswordEncoder(STRENGTH));
+		encoders.put("argon2", new Argon2PasswordEncoder(16, 32, 1, 1 << 14, 2));
 
-		return new DelegatingPasswordEncoder(id, encoders);
-	}*/
+		DelegatingPasswordEncoder delegatingPasswordEncoder = new DelegatingPasswordEncoder(id, encoders);
+		delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(GalaxyPasswordEncoder.getInstance());
+		
+		return delegatingPasswordEncoder;
+	}
 	
-	@Bean
+	/*@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(STRENGTH);
-	}	
+	}*/
 }

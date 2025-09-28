@@ -21,7 +21,7 @@ import com.ventas.app.business.services.ProductoService;
 import com.ventas.app.business.services.ServiceException;
 
 @RestController
-@RequestMapping("/api/v1/producto")
+@RequestMapping("/public/api/v1/producto")
 public class ProductoController {
 	private final ProductoService productoService;
 	private final String MSG_INTERNAL_ERROR = "Se ha producido un error interno";

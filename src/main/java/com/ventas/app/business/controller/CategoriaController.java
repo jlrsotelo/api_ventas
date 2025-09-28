@@ -21,7 +21,7 @@ import com.ventas.app.business.services.CategoriaService;
 import com.ventas.app.business.services.ServiceException;
 
 @RestController
-@RequestMapping("/api/v1/categoria")
+@RequestMapping("/private/api/v1/categoria")
 public class CategoriaController {
 	private final CategoriaService categoriaService;
 	private final String MSG_INTERNAL_ERROR = "Se ha producido un error interno";
@@ -33,7 +33,7 @@ public class CategoriaController {
 		this.categoriaService = categoriaService;
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("/consulta/all")
 	public ResponseEntity<?> getAll() {
 		try {
 			List<CategoriaEntity> lstCategoriaEntity = this.categoriaService.findAll();
@@ -48,7 +48,7 @@ public class CategoriaController {
 		}
 	}
 	
-	@PostMapping
+	@PostMapping("/gestion")
 	public ResponseEntity<?> save(@RequestBody CategoriaEntity categoriaEntity){
 		try {
 			CategoriaEntity oCategoriaEntity = this.categoriaService.save(categoriaEntity);
@@ -65,7 +65,7 @@ public class CategoriaController {
 		}
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/gestion/{id}")
 	public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody CategoriaEntity categoriaEntity){
 
 		try {
@@ -86,7 +86,7 @@ public class CategoriaController {
 		}
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/gestion/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id){
 
 		try {

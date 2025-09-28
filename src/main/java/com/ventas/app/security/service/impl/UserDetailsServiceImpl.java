@@ -1,5 +1,6 @@
 package com.ventas.app.security.service.impl;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ventas.app.security.entity.UserEntity;
 import com.ventas.app.security.repository.UserRepository;
 
-import static java.util.Collections.emptyList;
-
-@Service
+//@Service
 public class UserDetailsServiceImpl implements  UserDetailsService{
 	
 	private final UserRepository userRepository;
@@ -19,7 +18,6 @@ public class UserDetailsServiceImpl implements  UserDetailsService{
 	public UserDetailsServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,7 +29,7 @@ public class UserDetailsServiceImpl implements  UserDetailsService{
 				.builder()
 				.username(userEntity.getUserName())
 				.password(userEntity.getPassword())
-				.authorities(emptyList())
+				.authorities(userEntity.getAuthorities().stream().map(a-> new SimpleGrantedAuthority(a.getName().toUpperCase())).toList())
 				.build();
 		return user;
 	}
