@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ventas.app.security.entity.UserEntity;
 import com.ventas.app.security.repository.UserRepository;
 
-//@Service
+@Service
 public class UserDetailsServiceImpl implements  UserDetailsService{
 	
 	private final UserRepository userRepository;

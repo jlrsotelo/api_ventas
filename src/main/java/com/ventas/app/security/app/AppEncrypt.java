@@ -6,7 +6,7 @@ public class AppEncrypt {
 
 	public static void main(String[] args) {
 		
-		System.out.println(Encrypt.encrypt("adminpass"));
+		System.out.println(Encrypt.encrypt("123"));
 	}
 
 }

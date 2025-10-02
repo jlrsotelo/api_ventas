@@ -37,7 +37,7 @@ public class SecurityConfig {
 	    return http.build();
 	}
 	
-	@Bean
+	/*@Bean
 	UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
 		log.info("userDetailsService...");
 		UserDetails admin = User.builder()
@@ -53,13 +53,13 @@ public class SecurityConfig {
 			.roles("USER")
 			.build();
 		return new InMemoryUserDetailsManager(user, admin);
-	}	
+	}*/
 	
-	 /*@Bean
+	 @Bean
 	 AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(userDetailsService);
 		authProvider.setPasswordEncoder(passwordEncoder);
 		return authProvider;
-	 } */
+	 }
 }

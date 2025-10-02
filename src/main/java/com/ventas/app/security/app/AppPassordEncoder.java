@@ -6,10 +6,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppPassordEncoder {
 
 	public static void main(String[] args) {
-		BCryptPasswordEncoder bCryptPasswordEncoder=	new BCryptPasswordEncoder(10);
-		System.out.println(bCryptPasswordEncoder.encode("123"));
+		//BCryptPasswordEncoder bCryptPasswordEncoder=	new BCryptPasswordEncoder(10);
+		//System.out.println(bCryptPasswordEncoder.encode("123"));
 		
-		/*Argon2PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+		//Argon2PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 		
 		Argon2PasswordEncoder argon2PasswordEncoder= new Argon2PasswordEncoder( 16, // saltLength (bytes)
 	            32, // hashLength (bytes)
@@ -18,7 +18,7 @@ public class AppPassordEncoder {
 	            2   // iterations (time cost)
 	            );
 		
-		System.out.println(argon2PasswordEncoder.encode("123"));*/
+		System.out.println(argon2PasswordEncoder.encode("123"));
 		
 		//String psw=passwordEncoder2.encode("password");
 		//System.out.println(psw);

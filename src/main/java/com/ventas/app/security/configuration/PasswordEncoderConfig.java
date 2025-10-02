@@ -17,7 +17,7 @@ public class PasswordEncoderConfig {
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		String id = "gtcrypt";
+		String id = "bcrypt";
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
 		encoders.put("gtcrypt", GalaxyPasswordEncoder.getInstance()); // Lagacy
 		encoders.put("noop", NoOpPasswordEncoder.getInstance());
