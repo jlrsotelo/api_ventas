@@ -72,7 +72,9 @@ public class ProductoServiceImpl implements ProductoService{
 			oProductoEntity.setNombre(productoEntity.getNombre());
 			oProductoEntity.setDescripcion(productoEntity.getDescripcion());
 			oProductoEntity.setFoto(productoEntity.getFoto());
-			oProductoEntity.setStock(productoEntity.getStock());
+			oProductoEntity.setTalla(productoEntity.getTalla());
+			oProductoEntity.setMaterial(productoEntity.getMaterial());
+			oProductoEntity.setTaco(productoEntity.getTaco());
 			oProductoEntity.setPrecio(productoEntity.getPrecio());
 			oProductoEntity.setEstado(productoEntity.getEstado());
 			oProductoEntity.setBorrado(productoEntity.getBorrado());

@@ -31,21 +31,27 @@ public class ProductoEntity {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="descripcion")
-	private String descripcion;
-	
 	@Column(name="foto")
 	private String foto;
 	
-	@Column(name="stock")
-	private Integer stock;
+	@Column(name="talla")
+	private String talla;
+	
+	@Column(name="material")
+	private String material;
+	
+	@Column(name="taco")
+	private String taco;
 	
 	@Column(name="precio")
 	private float precio;
+	
+	@Column(name="descripcion")
+	private String descripcion;
 	
 	@Column(name="estado")
 	private String estado;
 	
 	@Column(name="borrado")
-	private String borrado;	
+	private String borrado;
 }
