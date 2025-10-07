@@ -1,14 +1,13 @@
-package com.ventas.app.business.controller;
+package com.ventas.app.business.controller.privates.gestion;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import static java.util.Objects.isNull;
+import static com.ventas.app.business.controller.constants.ConstantController.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,47 +15,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ventas.app.business.entity.ProductoEntity;
-import com.ventas.app.business.services.ProductoService;
+import com.ventas.app.business.entity.CategoriaEntity;
+import com.ventas.app.business.services.CategoriaService;
 import com.ventas.app.business.services.ServiceException;
 
 @RestController
-@RequestMapping("/public/api/v1/producto")
-public class ProductoController {
-	private final ProductoService productoService;
-	private final String MSG_INTERNAL_ERROR = "Se ha producido un error interno";
-	private final String MSG_BAD_REQUEST = "Operación no valida";
+@RequestMapping("/private/api/v1/categoria/gestion")
+public class CategoriaGestionController {
+	private final CategoriaService categoriaService;
 	private Map<String, String> map = new HashMap<>();
-	
-	public ProductoController(ProductoService productoService) {
-		super();
-		this.productoService = productoService;
-	}
 
-	@GetMapping("/all")
-	public ResponseEntity<?> getAll() {
-		try {
-			List<ProductoEntity> lstProductoEntity = this.productoService.findAll();
-			if (lstProductoEntity.isEmpty()) {
-				return ResponseEntity.noContent().build();
-			} else {
-				return ResponseEntity.ok(lstProductoEntity);
-			}
-		} catch (Exception e) {
-			map.put("error", MSG_INTERNAL_ERROR);
-			return ResponseEntity.internalServerError().body(map);
-		}
+	public CategoriaGestionController(CategoriaService categoriaService) {
+		super();
+		this.categoriaService = categoriaService;
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody ProductoEntity productoEntity){
+	public ResponseEntity<?> save(@RequestBody CategoriaEntity categoriaEntity){
 		try {
-			ProductoEntity oProductoEntity = this.productoService.save(productoEntity);
-			if (isNull(oProductoEntity)) {
+			CategoriaEntity oCategoriaEntity = this.categoriaService.save(categoriaEntity);
+			if (isNull(oCategoriaEntity)) {
 				map.put("alerta", MSG_BAD_REQUEST);
 				return ResponseEntity.badRequest().body(map);
 			} else {
-				return new ResponseEntity<>(oProductoEntity,HttpStatus.CREATED);
+				return new ResponseEntity<>(oCategoriaEntity,HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,15 +48,15 @@ public class ProductoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody ProductoEntity productoEntity){
+	public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody CategoriaEntity categoriaEntity){
 
 		try {
-			ProductoEntity oProductoEntity = this.productoService.update(id,productoEntity);
-			if (isNull(oProductoEntity)) {
+			CategoriaEntity oCategoriaEntity = this.categoriaService.update(id,categoriaEntity);
+			if (isNull(oCategoriaEntity)) {
 				map.put("alerta", MSG_BAD_REQUEST);
 				return ResponseEntity.badRequest().body(map);
 			} else {
-				return ResponseEntity.ok(oProductoEntity);
+				return ResponseEntity.ok(oCategoriaEntity);
 			}
 		} catch (ServiceException e) {
 			map.put("error", e.getMessage());
@@ -90,7 +72,7 @@ public class ProductoController {
 	public ResponseEntity<?> delete(@PathVariable Long id){
 
 		try {
-			this.productoService.delete(id);
+			this.categoriaService.delete(id);
 			return ResponseEntity.ok().build();
 		} catch (ServiceException e) {
 			map.put("error", e.getMessage());

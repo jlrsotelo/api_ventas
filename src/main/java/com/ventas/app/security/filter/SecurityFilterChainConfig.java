@@ -6,11 +6,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +16,31 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Slf4j
 @Configuration
-public class SecurityConfig {
+public class SecurityFilterChainConfig {
+	
+	private final String PUBLIC_MATCHERS[]= {
+			"/public/**"
+	};
+	
+	private final String PRIVATE_CONSULTA_MATCHERS[]= {
+			"/private/api/v1/categoria/consulta/**",
+			"/private/api/v1/producto/consulta/**"
+	};
+	
+	private final String PRIVATE_GESTION_MATCHERS[]= {
+			"/private/api/v1/categoria/gestion/**",
+			"/private/api/v1/producto/gestion/**"
+	};
+	
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		log.info("defaultSecurityFilterChain...");
 	    http
 	        .authorizeHttpRequests(
 	        	(requests) -> requests
-	        	.requestMatchers("/public/**").permitAll()
-	            .requestMatchers("/private/api/v1/categoria/consulta/**").hasRole("USER")
-	            .requestMatchers("/private/api/v1/categoria/gestion/**").hasRole("ADMIN")
+	        	.requestMatchers(PUBLIC_MATCHERS).permitAll()
+	            .requestMatchers(PRIVATE_CONSULTA_MATCHERS).hasAnyRole("USER")
+	            .requestMatchers(PRIVATE_GESTION_MATCHERS).hasAnyRole("ADMIN","SUPER")
 	            .anyRequest()
 	            .authenticated()
 	         )
@@ -36,24 +48,6 @@ public class SecurityConfig {
 	        .httpBasic(withDefaults()); 
 	    return http.build();
 	}
-	
-	/*@Bean
-	UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-		log.info("userDetailsService...");
-		UserDetails admin = User.builder()
-			.username("admin")
-			//.password("{noop}adminpass")
-			.password(passwordEncoder.encode("abc"))
-			.roles("ADMIN", "USER")
-			.build();
-		UserDetails user = User.builder() 
-			.username("user")
-			//.password("{noop}password")
-			.password(passwordEncoder.encode("123"))
-			.roles("USER")
-			.build();
-		return new InMemoryUserDetailsManager(user, admin);
-	}*/
 	
 	 @Bean
 	 AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {

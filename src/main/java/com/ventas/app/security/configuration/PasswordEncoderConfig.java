@@ -29,9 +29,4 @@ public class PasswordEncoderConfig {
 		
 		return delegatingPasswordEncoder;
 	}
-	
-	/*@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(STRENGTH);
-	}*/
 }
