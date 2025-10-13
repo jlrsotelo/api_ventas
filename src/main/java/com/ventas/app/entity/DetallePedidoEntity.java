@@ -1,5 +1,7 @@
 package com.ventas.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,11 +28,12 @@ public class DetallePedidoEntity {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idpedido", nullable = false)
-	private PedidoEntity Pedido;
+	@JsonBackReference
+	private PedidoEntity pedido;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idproducto", nullable = false)
-	private ProductoEntity Producto;
+	private ProductoEntity producto;
 	
 	@Column(name="precio")
 	private float precio;

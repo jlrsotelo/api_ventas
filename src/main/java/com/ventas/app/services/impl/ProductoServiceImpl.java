@@ -32,6 +32,24 @@ public class ProductoServiceImpl implements ProductoService{
 			throw new ServiceException(e);
 		}
 	}
+	
+	@Override
+	public List<ProductoEntity> findByIdCategoria(Long id) throws ServiceException {
+		try {
+			return this.productoRepository.findByIdCategoria(id);
+		}catch(Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/*/*@Override
+	public List<ProductoEntity> findByAll() throws ServiceException {
+		try {
+			return this.productoRepository.findByAll();
+		}catch(Exception e) {
+			throw new ServiceException(e);
+		}
+	}	*/
 
 	@Override
 	public ProductoEntity save(ProductoEntity productoEntity) throws ServiceException {
