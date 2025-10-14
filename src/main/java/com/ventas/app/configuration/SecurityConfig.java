@@ -3,6 +3,7 @@ package com.ventas.app.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,9 +23,14 @@ public class SecurityConfig {
 		log.info("defaultSecurityFilterChain...");
 	    http
 	        .authorizeHttpRequests((requests) -> requests
-	            .requestMatchers("/api/v1/categoria/*").authenticated()
-	            .requestMatchers("api/v1/producto/*").permitAll())
+	            .requestMatchers("/api/v1/categoria/**").authenticated()
+	            .requestMatchers("/api/v1/cliente/**").authenticated()
+	            .requestMatchers("/api/v1/producto/**").authenticated()
+	            .requestMatchers("/api/v1/catalogo/**").permitAll()
+	            .requestMatchers("/api/v1/pedido/**").permitAll()
+	            )
 	        //.formLogin(withDefaults()) 
+	        .csrf(AbstractHttpConfigurer::disable) //Habilitar POST
 	        .httpBasic(withDefaults()); 
 	    return http.build();
 	}
