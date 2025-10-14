@@ -1,5 +1,7 @@
 package com.ventas.app.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,42 +18,29 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="producto")
-@Entity(name="ProductoEntity")
-public class ProductoEntity {
+@Table(name="detalle_pedido")
+@Entity(name="DetallePedidoEntity")
+public class DetallePedidoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idproducto", nullable=false)
-	private Long idproducto;
+	@Column(name="id", nullable=false)
+	private Long id;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "idcategoria", nullable = false)
-	private CategoriaEntity categoria;
+	@JoinColumn(name = "idpedido", nullable = false)
+	@JsonBackReference
+	private PedidoEntity pedido;
 	
-	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="foto")
-	private String foto;
-	
-	@Column(name="talla")
-	private String talla;
-	
-	@Column(name="material")
-	private String material;
-	
-	@Column(name="taco")
-	private String taco;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idproducto", nullable = false)
+	private ProductoEntity producto;
 	
 	@Column(name="precio")
 	private float precio;
 	
-	@Column(name="descripcion")
-	private String descripcion;
+	@Column(name="cantidad")
+	private Integer cantidad;
 	
-	@Column(name="estado")
-	private String estado;
-	
-	@Column(name="borrado")
-	private String borrado;
+	@Column(name="total")
+	private float total;
 }
