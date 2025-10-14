@@ -1,7 +1,6 @@
 package com.ventas.app.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,15 @@ public class ProductoServiceImpl implements ProductoService{
 	public List<ProductoEntity> findAll() throws ServiceException {
 		try {
 			return this.productoRepository.findAll();
+		}catch(Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public List<ProductoEntity> findByIdCategoria(Long id) throws ServiceException {
+		try {
+			return this.productoRepository.findByIdCategoria(id);
 		}catch(Exception e) {
 			throw new ServiceException(e);
 		}
@@ -72,7 +80,9 @@ public class ProductoServiceImpl implements ProductoService{
 			oProductoEntity.setNombre(productoEntity.getNombre());
 			oProductoEntity.setDescripcion(productoEntity.getDescripcion());
 			oProductoEntity.setFoto(productoEntity.getFoto());
-			oProductoEntity.setStock(productoEntity.getStock());
+			oProductoEntity.setTalla(productoEntity.getTalla());
+			oProductoEntity.setMaterial(productoEntity.getMaterial());
+			oProductoEntity.setTaco(productoEntity.getTaco());
 			oProductoEntity.setPrecio(productoEntity.getPrecio());
 			oProductoEntity.setEstado(productoEntity.getEstado());
 			oProductoEntity.setBorrado(productoEntity.getBorrado());
