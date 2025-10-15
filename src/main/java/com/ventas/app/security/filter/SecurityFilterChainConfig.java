@@ -24,12 +24,14 @@ public class SecurityFilterChainConfig {
 	
 	private final String PRIVATE_CONSULTA_MATCHERS[]= {
 			"/private/api/v1/categoria/consulta/**",
-			"/private/api/v1/producto/consulta/**"
+			"/private/api/v1/producto/consulta/**",
+			"/private/api/v1/cliente/consulta/**"
 	};
 	
 	private final String PRIVATE_GESTION_MATCHERS[]= {
 			"/private/api/v1/categoria/gestion/**",
-			"/private/api/v1/producto/gestion/**"
+			"/private/api/v1/producto/gestion/**",
+			"/private/api/v1/cliente/gestion/**"
 	};
 	
 	@Bean

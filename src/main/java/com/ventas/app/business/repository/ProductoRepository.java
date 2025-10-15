@@ -15,6 +15,12 @@ public interface ProductoRepository extends JpaRepository<ProductoEntity, Long>{
 	@Query(value = "select c from ProductoEntity c where c.borrado='0' and idproducto=:id")
 	List<ProductoEntity> findByIdproducto(@Param("id") Long id);
 	
+	@Query(value = "select c from ProductoEntity c where c.borrado='0' and c.categoria.idcategoria=:id")
+	List<ProductoEntity> findByIdCategoria(@Param("id") Long id);
+	
+	@Query(value = "select c from ProductoEntity c where c.borrado='0'")
+	List<ProductoEntity> findAll();	
+	
 	@Modifying
 	@Query(value = "update producto set borrado='1' where idproducto=:id", nativeQuery = true )
 	void eliminar(@Param("id") Long id);

@@ -1,7 +1,6 @@
 package com.ventas.app.business.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -95,6 +94,15 @@ public class ProductoServiceImpl implements ProductoService{
 			}
 			productoRepository.eliminar(id);
 		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	public List<ProductoEntity> findByIdCategoria(Long id) throws ServiceException {
+		try {
+			return this.productoRepository.findByIdCategoria(id);
+		}catch(Exception e) {
 			throw new ServiceException(e);
 		}
 	}
