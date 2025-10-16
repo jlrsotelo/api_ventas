@@ -35,6 +35,18 @@ public class UserEntity {
 
 	@Column(name = "FULL_NAME")
 	private String fullName;
+	
+	@Column(name = "ENABLED")
+	private Boolean enabled;
+
+	@Column(name = "ACCOUNT_NON_EXPIRED")
+	private Boolean accountNonExpired;
+
+	@Column(name = "CREDENTIALS_NON_EXPIRED")
+	private Boolean credentialsNonExpired;
+
+	@Column(name = "ACCOUNT_NON_LOCKED")
+	private Boolean accountNonLocked;	
 
 	@Column(name = "STATE")
 	private String state;
