@@ -2,13 +2,13 @@ package com.ventas.app.business.services.impl;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.ventas.app.business.entity.ClienteEntity;
 import com.ventas.app.business.repository.ClienteRepository;
 import com.ventas.app.business.services.ClienteService;
 import com.ventas.app.business.services.ServiceException;
+import com.ventas.app.security.annotation.IsCustomRole;
 
 import jakarta.transaction.Transactional;
 
@@ -30,7 +30,7 @@ public class ClienteServiceImpl implements ClienteService{
 		}
 	}
 
-	@PreAuthorize("hasRole('SUPER')")
+	@IsCustomRole({"'SUPER'"})
 	@Override
 	public ClienteEntity save(ClienteEntity clienteEntity) throws ServiceException {
 		try {

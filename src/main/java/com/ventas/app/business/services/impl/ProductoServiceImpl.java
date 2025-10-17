@@ -2,7 +2,6 @@ package com.ventas.app.business.services.impl;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.ventas.app.business.entity.CategoriaEntity;
@@ -11,6 +10,7 @@ import com.ventas.app.business.repository.CategoriaRepository;
 import com.ventas.app.business.repository.ProductoRepository;
 import com.ventas.app.business.services.ProductoService;
 import com.ventas.app.business.services.ServiceException;
+import com.ventas.app.security.annotation.IsCustomRole;
 
 import jakarta.transaction.Transactional;
 
@@ -34,7 +34,7 @@ public class ProductoServiceImpl implements ProductoService{
 		}
 	}
 
-	@PreAuthorize("hasRole('SUPER')")
+	@IsCustomRole({"'SUPER'"})
 	@Override
 	public ProductoEntity save(ProductoEntity productoEntity) throws ServiceException {
 		try {

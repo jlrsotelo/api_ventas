@@ -7,7 +7,6 @@ import static com.ventas.app.business.controller.constants.ConstantController.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ventas.app.business.entity.CategoriaEntity;
 import com.ventas.app.business.services.CategoriaService;
 import com.ventas.app.business.services.ServiceException;
+import com.ventas.app.security.annotation.AuthAdmin;
 
 @RestController
 @RequestMapping("/private/api/v1/categoria/gestion")
@@ -48,7 +48,7 @@ public class CategoriaGestionController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	@AuthAdmin
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody CategoriaEntity categoriaEntity){
 
@@ -70,7 +70,7 @@ public class CategoriaGestionController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	@AuthAdmin
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id){
 
