@@ -8,6 +8,7 @@ import static com.ventas.app.business.controller.constants.ConstantController.MS
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class ClienteGestionController {
 		this.clienteService = clienteService;
 	}
 	
+	@PreAuthorize("hasRole('SUPER')")
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody ClienteEntity ClienteEntity){
 		try {
@@ -48,6 +50,7 @@ public class ClienteGestionController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody ClienteEntity ClienteEntity){
 
@@ -69,6 +72,7 @@ public class ClienteGestionController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id){
 
