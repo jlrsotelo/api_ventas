@@ -32,7 +32,6 @@ public class ClienteGestionController {
 		this.clienteService = clienteService;
 	}
 	
-	@PreAuthorize("hasRole('SUPER')")
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody ClienteEntity ClienteEntity){
 		try {

@@ -31,7 +31,6 @@ public class CategoriaGestionController {
 		this.categoriaService = categoriaService;
 	}
 	
-	@PreAuthorize("hasRole('SUPER')")
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody CategoriaEntity categoriaEntity){
 		try {

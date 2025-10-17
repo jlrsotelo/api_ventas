@@ -31,7 +31,6 @@ public class ProductoGestionController {
 		this.productoService = productoService;
 	}
 	
-	@PreAuthorize("hasRole('SUPER')")
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody ProductoEntity productoEntity){
 		try {

@@ -2,6 +2,7 @@ package com.ventas.app.business.services.impl;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.ventas.app.business.entity.CategoriaEntity;
@@ -29,6 +30,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 		}
 	}
 
+	@PreAuthorize("hasRole('SUPER')")
 	@Override
 	public CategoriaEntity save(CategoriaEntity categoriaEntity) throws ServiceException {
 		try {
