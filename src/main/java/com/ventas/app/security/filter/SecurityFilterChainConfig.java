@@ -2,18 +2,17 @@ package com.ventas.app.security.filter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import com.ventas.app.security.provider.CustomAuthenticationProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+
+import javax.sql.DataSource;
 
 @EnableMethodSecurity
 @Slf4j
@@ -36,6 +35,22 @@ public class SecurityFilterChainConfig {
 			"/private/api/v1/cliente/gestion/**"
 	};
 	
+	private final String SQL_USER = """
+			select user_name as username, password, state as enabled from
+	seg_user where user_name= ? """;
+
+	private final String SQL_AUTHORITIES = """
+			select usu.user_name as username, upper(aut.name) as authority from
+	seg_authority aut inner join seg_user_authority usa on
+	aut.authority_id=usa.authority_id inner join seg_user usu on
+	usa.user_id= usu.user_id and usu.user_name= ? """;
+	
+	private final DataSource datasource;
+
+	public SecurityFilterChainConfig(DataSource datasource) {
+		this.datasource = datasource;
+	}	
+	
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		log.info("defaultSecurityFilterChain...");
@@ -54,8 +69,13 @@ public class SecurityFilterChainConfig {
 	}
 	
 	@Bean
-	AuthenticationManager authenticationManager(CustomAuthenticationProvider customAuthenticationProvider) {
-		return new ProviderManager(customAuthenticationProvider);
+	JdbcUserDetailsManager jdbcUserDetailsManager() throws Exception {
+		log.info("SQL_USER {}", SQL_USER);
+		log.info("SQL_AUTHORITIES {}", SQL_AUTHORITIES);
+		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(datasource);
+		jdbcUserDetailsManager.setUsersByUsernameQuery(SQL_USER);
+		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(SQL_AUTHORITIES);
+		return jdbcUserDetailsManager;
 	}
 
 }
