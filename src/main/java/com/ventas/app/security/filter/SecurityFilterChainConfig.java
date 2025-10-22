@@ -10,10 +10,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.extern.slf4j.Slf4j;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableMethodSecurity
 @Slf4j
@@ -21,7 +20,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityFilterChainConfig {
 	
 	private final String PUBLIC_MATCHERS[]= {
-			"/public/**"
+			"/public/**",
+			"/api/v1/auth/**",
+			"/api/v1/users/**"
 	};
 	
 	private final String PRIVATE_CONSULTA_MATCHERS[]= {
@@ -36,6 +37,13 @@ public class SecurityFilterChainConfig {
 			"/private/api/v1/cliente/gestion/**"
 	};
 	
+	private final SecurityTokenFilter securityTokenFilter;
+	
+	public SecurityFilterChainConfig(SecurityTokenFilter securityTokenFilter) {
+		super();
+		this.securityTokenFilter = securityTokenFilter;
+	}
+
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		log.info("defaultSecurityFilterChain...");
@@ -48,8 +56,8 @@ public class SecurityFilterChainConfig {
 	            .anyRequest()
 	            .authenticated()
 	         )
-	        .csrf(AbstractHttpConfigurer::disable) //Habilitar POST
-	        .httpBasic(withDefaults()); 
+	        .csrf(AbstractHttpConfigurer::disable);
+	        http.addFilterBefore(securityTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	    return http.build();
 	}
 	

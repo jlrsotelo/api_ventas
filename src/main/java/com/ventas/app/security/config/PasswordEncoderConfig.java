@@ -1,8 +1,7 @@
-package com.ventas.app.security.configuration;
+package com.ventas.app.security.config;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
@@ -11,8 +10,11 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.ventas.app.security.encoder.GalaxyPasswordEncoder;
+
 @Configuration
 public class PasswordEncoderConfig {
+	
 	private final Integer STRENGTH =10;
 	
 	@Bean
@@ -29,4 +31,5 @@ public class PasswordEncoderConfig {
 		
 		return delegatingPasswordEncoder;
 	}
+
 }
