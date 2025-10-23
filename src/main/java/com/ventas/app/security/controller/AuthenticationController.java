@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +36,14 @@ public class AuthenticationController {
 		
 		try {
 
-			LoginResponseDTO  loginResponseDTO = authenticationService.login(request);
+			LoginResponseDTO  loginResponseDTO = authenticationService.login(request, true, null);
 			log.info("token {}", loginResponseDTO.token());
 			
 			//log.info("refreshToken {}", loginResponseDTO.getRefreshToken());
 			
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("token", TOKEN_BEARER_PREFIX + loginResponseDTO.token());
-			//responseHeaders.set("RefreshToken", TOKEN_BEARER_PREFIX + loginResponseDTO.getRefreshToken());
+			responseHeaders.set("RefreshToken", TOKEN_BEARER_PREFIX + loginResponseDTO.refreshToken());
 			
 			return ResponseEntity.ok().headers(responseHeaders).build();
 			
@@ -61,7 +62,7 @@ public class AuthenticationController {
 		
 		try {
 
-			LoginResponseDTO  loginResponseDTO = authenticationService.login(request);
+			LoginResponseDTO  loginResponseDTO = authenticationService.login(request, true, null);
 			log.info("token {}", loginResponseDTO.token());
 			
 			//log.info("refreshToken {}", loginResponseDTO.getRefreshToken());
@@ -72,6 +73,7 @@ public class AuthenticationController {
 			Map<String, String> body = new HashMap<>();
 			body.put("type", TOKEN_BEARER_PREFIX);
 			body.put("token",loginResponseDTO.token());
+			body.put("RefreshToken",loginResponseDTO.refreshToken());
 			return ResponseEntity.ok().body(body);
 			
 		} catch (AuthenticationServiceException e) {
@@ -80,5 +82,24 @@ public class AuthenticationController {
 			body.put("error", "Error interno");
 			return ResponseEntity.internalServerError().body(body);
 		}
+	}
+	
+	@PostMapping(TOKEN_REFRESH_URL)
+	public ResponseEntity<?> refreshToken(HttpServletResponse response, @RequestParam("refreshToken") String refreshToken) {
+	    try {
+	    	LoginResponseDTO  loginResponseDTO = authenticationService.login(null, false, refreshToken);
+	        log.info("Nuevo Token {}", loginResponseDTO.token());
+
+	        HttpHeaders responseHeaders = new HttpHeaders();
+	        responseHeaders.set("token", TOKEN_BEARER_PREFIX + loginResponseDTO.token());
+
+	        return ResponseEntity.ok().headers(responseHeaders).build();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        Map<String, String> body = new HashMap<>();
+	        body.put("error_refresh_token", "Error Interno");
+	        return ResponseEntity.internalServerError().body(body);
+	    }
 	}
 }

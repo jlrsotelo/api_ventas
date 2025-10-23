@@ -10,7 +10,7 @@ public interface SecurityConstant {
 		
 		String LOGIN_BODY_URL = "/login/body";
 		
-		//String TOKEN_REFRESH_URL = "/tokenRefresh";
+		String TOKEN_REFRESH_URL = "/tokenRefresh";
 
 		String HEADER_AUTHORIZACION_KEY = "Authorization";
 
@@ -28,9 +28,9 @@ public interface SecurityConstant {
 
 		//long TOKEN_EXPIRATION_TIME = 86_400_000; // 1 day 86_400_000 // Milisegundos
 		
-		long TOKEN_EXPIRATION_TIME = 900_000; // 1 day 86_400_000 // Milisegundos - 3 Minutos 1_000*60*60 => 3_600_000
+		long TOKEN_EXPIRATION_TIME = 180_000; // 1 day 86_400_000 // Milisegundos - 3 Minutos 1_000*60*60 => 3_600_000
 
-		//long TOKEN_REFRESH_EXPIRATION_TIME = 360_000; // 1 day 86_400_000 // Milisegundos
+		long TOKEN_REFRESH_EXPIRATION_TIME = 360_000; // 1 day 86_400_000 // Milisegundos
 
 		//String USER_ID="user_id";
 		

@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import com.ventas.app.security.dto.LoginResponseDTO;
 
 public interface JWTService {
-
-	LoginResponseDTO generateJwtToken(UserDetails userDetails);
-	
-	//String generateJwtTokenFromRefreshToken(UserDetails userDetails);
+	LoginResponseDTO generateJwtToken(UserDetails userDetails, Boolean swRefreshToken, String refreshToken);
 	
 	String  getUserNameFromJwtToken(String token);
 
@@ -18,5 +15,4 @@ public interface JWTService {
 	boolean validateJwtToken(String token); // owner, expiration
 
 	String getJwtToken(HttpServletRequest request);
-
 }

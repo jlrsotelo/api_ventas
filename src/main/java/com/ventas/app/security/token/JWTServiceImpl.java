@@ -24,7 +24,7 @@ import static com.ventas.app.security.constants.SecurityConstant.*;
 public class JWTServiceImpl implements JWTService {
 
 	@Override
-	public LoginResponseDTO generateJwtToken(UserDetails userDetails) {
+	public LoginResponseDTO generateJwtToken(UserDetails userDetails, Boolean swRefreshToken, String refreshToken) {
 
 		log.info("generateJwtToken...", userDetails);
 
@@ -36,6 +36,10 @@ public class JWTServiceImpl implements JWTService {
 		// claims.put(SegurityConstant.USER_ID, customUserDetails.get);
 		//claims.put(SegurityConstant.ORGANIZATION_ID, customUserDetails.getOrganization());
 		//claims.put(SecurityConstant.USER_TYPE, customUserDetails.getUserType());
+		
+		if(!swRefreshToken) {
+			this.validateJwtToken(refreshToken);
+		}
 
 		String token = Jwts.builder()
 				.claims(claims)
@@ -45,35 +49,24 @@ public class JWTServiceImpl implements JWTService {
 				.expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.signWith(getSigningSecretKey())
 				.compact();
-		/*
-		String refreshToken = Jwts.builder().claims(claims).subject(customUserDetails.getUsername())
-				.issuer(SegurityConstant.ISSUER_INFO).issuedAt(new Date(System.currentTimeMillis()))
-				.expiration(new Date(System.currentTimeMillis() + SegurityConstant.TOKEN_REFRESH_EXPIRATION_TIME))
-				.signWith(getSigningSecretKey()).compact();
-		*/
-		return LoginResponseDTO.builder().token(token).build();//.refreshToken(refreshToken)
-	}
-
-	/*
-	@Override
-	public String generateJwtTokenFromRefreshToken(CustomUserDetails customUserDetails) {
 		
-		Collection<?> authorities = customUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.toList());
-
-		Map<String, Object> claims = new HashMap<>();
-
-		claims.put(SegurityConstant.AUTHORITIES, authorities);
-		// claims.put(SegurityConstant.USER_ID, customUserDetails.get);
-		claims.put(SegurityConstant.ORGANIZATION_ID, customUserDetails.getOrganization());
-		claims.put(SegurityConstant.USER_TYPE, customUserDetails.getUserType());
-
-		String token = Jwts.builder().claims(claims).subject(customUserDetails.getUsername())
-				.issuer(SegurityConstant.ISSUER_INFO).issuedAt(new Date(System.currentTimeMillis()))
-				.expiration(new Date(System.currentTimeMillis() + SegurityConstant.TOKEN_EXPIRATION_TIME))
-				.signWith(getSigningSecretKey()).compact();
-		return token;
-	}*/
+		if(swRefreshToken) {
+			refreshToken = Jwts.builder()
+					.claims(claims)
+					.subject(userDetails.getUsername())
+					.issuer(ISSUER_INFO)
+					.issuedAt(new Date(System.currentTimeMillis()))
+					.expiration(new Date(System.currentTimeMillis() + TOKEN_REFRESH_EXPIRATION_TIME))
+					.signWith(getSigningSecretKey())
+					.compact();
+		}
+		
+		return LoginResponseDTO
+				.builder()
+				.token(token)
+				.refreshToken(refreshToken)
+				.build();
+	}
 
 	@Override
 	public String getUserNameFromJwtToken(String token) {
