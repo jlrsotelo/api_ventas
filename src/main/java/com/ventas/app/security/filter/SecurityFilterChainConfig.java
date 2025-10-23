@@ -22,7 +22,10 @@ public class SecurityFilterChainConfig {
 	private final String PUBLIC_MATCHERS[]= {
 			"/public/**",
 			"/api/v1/auth/**",
-			"/api/v1/users/**"
+			"/api/v1/users/**",
+			"/v3/api-docs/**",
+			"/swagger-ui/**",
+			"/swagger-ui.html"
 	};
 	
 	private final String PRIVATE_CONSULTA_MATCHERS[]= {
